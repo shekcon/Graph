@@ -12,16 +12,15 @@ class Graph:
 
     def _NNHeuristic(self, other):
         if self.nodes:
-            mini_node = None
-            distance = 0
+            mini_distance = None
             for i, n in enumerate(self.nodes):
-                new_distance = sqrt(abs(n.latitude - other.latitude) ** 2 +
+                distance = sqrt(abs(n.latitude - other.latitude) ** 2 +
                                      abs(n.longitude - other.longitude) ** 2)
-                if not mini_node or new_distance < distance:
+                if not mini_distance or distance < mini_distance:
                     node = i
-                    distance = new_distance
+                    mini_distance = distance
             self.path.append(self.nodes.pop(node))
-            self.distance += distance
+            self.distance += mini_distance
 
     def find_shortest_path(self):
         total = len(self.nodes)
