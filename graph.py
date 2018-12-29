@@ -1,4 +1,5 @@
 from math import sqrt
+from abc import abstractmethod
 
 
 class Graph:
@@ -10,13 +11,19 @@ class Graph:
     def add_node(self, other):
         self.nodes.append(other)
 
-    def _NNHeuristic(self, other):
+    @abstractmethod
+    def find_shortest_path(self):
+        pass
+
+class NNH(Graph):
+
+    def _find_nearest_neighbor(self, other):
         if self.nodes:
             mini_node = None
             distance = 0
             for i, n in enumerate(self.nodes):
                 new_distance = sqrt(abs(n.latitude - other.latitude) ** 2 +
-                                     abs(n.longitude - other.longitude) ** 2)
+                                    abs(n.longitude - other.longitude) ** 2)
                 if not mini_node or new_distance < distance:
                     node = i
                     distance = new_distance
@@ -27,6 +34,8 @@ class Graph:
         total = len(self.nodes)
         self.path.append(self.nodes.pop(0))
         for node in self.path:
-            self._NNHeuristic(node)
+            self._find_nearest_neighbor(node)
             print("Processing: " + str(round(len(self.path) / total * 100, 2)) + "%")
         return [node.city for node in self.path], self.distance
+
+
