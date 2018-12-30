@@ -1,9 +1,10 @@
-from graph import NNH, Node
+from algorithms import NearestNeighbor, TwoOpt, BruteForce
 from time import time
 
 
 def create_nodes(file):
     from os import access, path, R_OK
+    from graph import Node
     if path.isfile(file) and access(file, R_OK):
         try:
             from csv import reader
@@ -25,16 +26,22 @@ def init_args():
     from argparse import ArgumentParser
     parser = ArgumentParser()
     parser.add_argument('file', help="city name, latitude, longitude")
+    parser.add_argument('--algo', choices=['NNH', "TwoOpt", 'BruteForce'])
     return parser.parse_args()
 
 
 def main():
     start = time()
     arg = init_args()
-    graph = NNH()
-    graph.add_node(create_nodes(arg.file))
-    path, distance = graph.find_shortest_path()
-    print("-->".join(path))
+    nodes = create_nodes(arg.file)
+    if arg.algo == 'TwoOpt':
+        algorithm = TwoOpt(nodes)
+    elif arg.algo == 'BruteForce':
+        algorithm = BruteForce(nodes)
+    else:
+        algorithm = NearestNeighbor(nodes)
+    route, distance = algorithm.find_shortest_path()
+    print(" --> ".join(route))
     print("Total of distance: " + str(distance))
     print("Time run:", time() - start)
 
