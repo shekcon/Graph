@@ -46,23 +46,26 @@ class NearestNeighbor(Graph):
         return [node.city for node in self.route], self.total_distance
 
 
-class TwoOpt(NearestNeighbor):
+class TwoOpt(Graph):
+    def __init__(self, nodes, isNNH):
+        super().__init__(nodes)
+        if isNNH:
+            nearest_neighbor = NearestNeighbor(nodes)
+            nearest_neighbor.find_shortest_path()
+            self.nodes = nearest_neighbor.route
 
     def find_shortest_path(self):
-        super().find_shortest_path()
-        total = len(self.route)
-        best_route = self.route
+        total = len(self.nodes)
+        best_route = self.nodes
         mini_distance = self._calcu_distance(best_route)
         improved = True
         while improved:
             improved = False
             for c in range(1, total - 1):
                 for k in range(c + 1, total):
-                    if c + 1 == k:
-                        continue
                     # reverse at c to k - 1
                     new_route = best_route[:c] + \
-                        best_route[c:k][::-1] + best_route[k:]
+                        best_route[c:k + 1][::-1] + best_route[k + 1:]
                     distance = self._calcu_distance(new_route)
                     # print("Current: %.4f Best distance: %.4f" % (round(distance, 4)
                     #       , round(mini_distance, 4)))
