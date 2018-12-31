@@ -2,13 +2,9 @@ Algorithm: Twoopt china
 Total of distance: 471.59562043255517
 Time run: 108.08606719970703
 
-Algorithm: NNH --> Twoopt china   
+Algorithm: NNH --> Twoopt china
 Total of distance: 470.66393406362954
 Time run: 62.221060276031494
-
-Algorithm: Twoopt vietnam
-Total of distance: 45.858629931907224
-Time run: 0.6048595905303955
 
 Algorithm: NNH --> Twoopt vietnam
 Total of distance: 39.19755871131735
@@ -29,4 +25,3 @@ Time run: 4.593885660171509
 Algorithm: NNH italia
 Total of distance: 694462.3213490138
 Time run: 56.178306579589844
-

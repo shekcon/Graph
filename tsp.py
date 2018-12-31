@@ -27,7 +27,7 @@ def init_args():
     parser = ArgumentParser()
     parser.add_argument('file', help="city name, latitude, longitude")
     parser.add_argument('--algo', choices=['NNH',
-                                           'BruteForce', "NNH_TwoOpt"])
+                                           'BruteForce', "TwoOpt"])
     return parser.parse_args()
 
 
@@ -37,10 +37,8 @@ def main():
     nodes = create_nodes(arg.file)
     if arg.algo == 'BruteForce':
         algorithm = BruteForce(nodes)
-    elif arg.algo == "NNH_TwoOpt":
-        NNH = NearestNeighbor(nodes)
-        NNH.find_shortest_path()
-        algorithm = TwoOpt(NNH.route)
+    elif arg.algo == "TwoOpt":
+        algorithm = TwoOpt(nodes)
     else:
         algorithm = NearestNeighbor(nodes)
     route, distance = algorithm.find_shortest_path()
