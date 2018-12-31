@@ -5,9 +5,13 @@ from math import sqrt
 class BruteForce(Graph):
 
     def find_shortest_path(self):
-        from itertools import permutations
-        mini_distance = None
+        if len(self.nodes) > 11:
+            from sys import exit
+            print("Too many cities")
+            exit(1)
         try:
+            from itertools import permutations
+            mini_distance = None
             start = [self.nodes[0]]
             for route in permutations(self.nodes[1:]):
                 distance = self._calcu_distance(start + list(route))
@@ -48,9 +52,9 @@ class TwoOpt(Graph):
         total = len(self.nodes)
         best_route = self.nodes
         mini_distance = self._calcu_distance(best_route)
-        improvement = True
-        while improvement:
-            improvement = False
+        improved = True
+        while improved:
+            improved = False
             for c in range(1, total - 1):
                 for k in range(c + 1, total):
                     if c + 1 == k:
@@ -59,11 +63,11 @@ class TwoOpt(Graph):
                     new_route = best_route[:c] + \
                         best_route[c:k][::-1] + best_route[k:]
                     distance = self._calcu_distance(new_route)
-                    print("Current: %.4f Best distance: %.4f" % (round(distance, 4)
-                          , round(mini_distance, 4)))
+                    # print("Current: %.4f Best distance: %.4f" % (round(distance, 4)
+                    #       , round(mini_distance, 4)))
                     if distance < mini_distance:
                         mini_distance = distance
                         best_route = new_route
-                        improvement = True
-                    
+                        improved = True
+
         return [node.city for node in best_route], mini_distance

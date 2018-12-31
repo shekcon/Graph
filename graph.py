@@ -10,7 +10,7 @@ class Node:
 
 
 class Graph:
-    
+
     def __init__(self, nodes):
         self.nodes = nodes
         self.route = []
@@ -18,9 +18,9 @@ class Graph:
 
     def _calcu_distance(self, route):
         distance = 0
-        for i in range(1, len(route)):
-            distance += sqrt((route[i - 1].latitude - route[i].latitude) ** 2 +
-                             (route[i - 1].longitude - route[i].longitude) ** 2)
+        for i in range(0, len(route) - 1):
+            distance += sqrt((route[i + 1].latitude - route[i].latitude) ** 2 +
+                             (route[i + 1].longitude - route[i].longitude) ** 2)
         return distance
 
     @abstractmethod
